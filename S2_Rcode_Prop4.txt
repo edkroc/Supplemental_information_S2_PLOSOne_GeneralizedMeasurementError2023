@@ -1,0 +1,32 @@
+M <- 100
+s1 <- c(rep(NA,M))
+s2 <- c(rep(NA,M))
+
+for(k in 1:M){
+N <- 10000
+s <- c(rep(NA,N))
+n <- 30
+m <- rnorm(n,2,20)
+v <- runif(n,0,5)
+x <- c(rep(NA,n))
+
+for(i in 1:N){
+	for(j in 1:n){
+		x[j] <- rnorm(1,m[j],sqrt(v[j]))
+	}
+	s[i] <- var(x)
+}
+s1[k] <- mean(s)
+
+mrho <- sum(m)/n
+srho1 <- c(rep(NA,n))
+srho2 <- c(rep(NA,n))
+for(j in 1:n){
+	srho1[j] <- (m[j] - mrho)^2
+	srho2[j] <- v[j]
+}
+srho <- sum(srho1)/(n-1) + sum(srho2)/n
+s2[k] <- srho
+}
+s1-s2
+mean(s1-s2)
